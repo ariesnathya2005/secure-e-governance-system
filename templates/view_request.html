@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="request-detail-container">
+    <div class="request-detail-box">
+        <h1>Application #{{ request.application_number }}</h1>
+        <p>Status: <span class="status-badge {{ request.status }}">{{ request.status.upper() }}</span></p>
+
+        <h3>Details</h3>
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <th style="border: 1px solid #ddd; padding: 0.5rem;">Type:</th>
+                <td style="border: 1px solid #ddd; padding: 0.5rem;">{{ request.application_type }}</td>
+            </tr>
+            <tr>
+                <th style="border: 1px solid #ddd; padding: 0.5rem;">Date:</th>
+                <td style="border: 1px solid #ddd; padding: 0.5rem;">{{ request.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            </tr>
+            <tr>
+                <th style="border: 1px solid #ddd; padding: 0.5rem;">Purpose:</th>
+                <td style="border: 1px solid #ddd; padding: 0.5rem;">{{ request.purpose }}</td>
+            </tr>
+        </table>
+
+        <h3>Encryption Demo</h3>
+        <div class="encryption-demo-grid">
+            <div class="encryption-card">
+                <h4>Original Data</h4>
+                <pre>{{ request.original_payload }}</pre>
+            </div>
+            <div class="encryption-card">
+                <h4>Encrypted Data</h4>
+                <pre>{{ request.encrypted_payload }}</pre>
+            </div>
+            <div class="encryption-card">
+                <h4>Decrypted View</h4>
+                <pre>{{ request.decrypted_description }}</pre>
+            </div>
+        </div>
+
+        {% if request.status == 'approved' %}
+        <div style="background: #d4edda; border: 1px solid #c3e6cb; padding: 1rem; margin: 1rem 0; border-radius: 5px;">
+            <h3>✓ Approval Information</h3>
+            <p><strong>Approved by:</strong> {{ request.approver.username }}</p>
+            <p><strong>Approval Date:</strong> {{ request.signature_timestamp.strftime('%Y-%m-%d %H:%M') if request.signature_timestamp else 'N/A' }}</p>
+            <p><strong>Officer Remark:</strong> {{ request.officer_remark or 'N/A' }}</p>
+            {% if request.digital_signature %}
+            <p><strong>Digital Signature:</strong><br><code style="word-break: break-all;">{{ request.digital_signature[:50] }}...</code></p>
+            <p style="font-size: 0.9rem; color: #155724;">✓ Verified signature applied</p>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <div style="margin-top: 2rem;">
+            <a href="{{ url_for('dashboard.dashboard') }}" class="btn btn-secondary">Back</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="form-container">
+    <div class="form-box">
+        <h1>Submit Government Application</h1>
+        <p class="subtitle">Birth certificate, income certificate, residence certificate, or grievance</p>
+
+        <form method="POST" action="{{ url_for('dashboard.submit_request') }}">
+            <div class="form-group">
+                <label for="application_type">Application Type *</label>
+                <select id="application_type" name="application_type" required>
+                    <option value="">-- Select Type --</option>
+                    <option value="birth_certificate">Birth Certificate</option>
+                    <option value="income_certificate">Income Certificate</option>
+                    <option value="residence_certificate">Residence Certificate</option>
+                    <option value="public_grievance">Public Grievance</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="aadhaar_id">Aadhaar ID *</label>
+                <input id="aadhaar_id" name="aadhaar_id" maxlength="12" placeholder="12-digit dummy Aadhaar ID" required>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address *</label>
+                <textarea id="address" name="address" rows="3" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="purpose">Purpose / Details *</label>
+                <textarea id="purpose" name="purpose" rows="5" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="remarks">Extra Remarks</label>
+                <textarea id="remarks" name="remarks" rows="3"></textarea>
+            </div>
+
+            <div style="background: #f0f0f0; padding: 1rem; margin: 1rem 0; border-radius: 5px;">
+                <strong>🔐 Data Security Notice</strong>
+                <p>✓ Original application data is stored and encrypted for demonstration</p>
+                <p>✓ Only authorized officials can view the full record</p>
+                <p>✓ All actions are logged for audit purposes</p>
+            </div>
+
+            <div style="display: flex; gap: 1rem;">
+                <button type="submit" class="btn btn-primary">Submit Application</button>
+                <a href="{{ url_for('dashboard.dashboard') }}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

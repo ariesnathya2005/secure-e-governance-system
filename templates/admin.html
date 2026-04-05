@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="padding: 2rem;">
+    <h1>Officer/Admin Panel - Manage Applications</h1>
+    <p>Citizen requests are reviewed, approved, or rejected here.</p>
+
+    <h2>Pending Requests</h2>
+    {% if pending %}
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 2rem;">
+            <thead>
+                <tr style="background: #f0f0f0;">
+                    <th style="border: 1px solid #ddd; padding: 0.5rem;">ID</th>
+                    <th style="border: 1px solid #ddd; padding: 0.5rem;">Application No</th>
+                    <th style="border: 1px solid #ddd; padding: 0.5rem;">Citizen</th>
+                    <th style="border: 1px solid #ddd; padding: 0.5rem;">Type</th>
+                    <th style="border: 1px solid #ddd; padding: 0.5rem;">Encrypted Data</th>
+                    <th style="border: 1px solid #ddd; padding: 0.5rem;">Date</th>
+                    <th style="border: 1px solid #ddd; padding: 0.5rem;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for req in pending %}
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 0.5rem;">#{{ req.id }}</td>
+                    <td style="border: 1px solid #ddd; padding: 0.5rem;">{{ req.application_number }}</td>
+                    <td style="border: 1px solid #ddd; padding: 0.5rem;">{{ req.requestor.username }}</td>
+                    <td style="border: 1px solid #ddd; padding: 0.5rem;">{{ req.application_type }}</td>
+                    <td style="border: 1px solid #ddd; padding: 0.5rem;">{{ req.encrypted_payload[:40] }}...</td>
+                    <td style="border: 1px solid #ddd; padding: 0.5rem;">{{ req.created_at.strftime('%Y-%m-%d') }}</td>
+                    <td style="border: 1px solid #ddd; padding: 0.5rem;">
+                        <form method="POST" action="{{ url_for('admin.approve_request', req_id=req.id) }}" style="display:inline;">
+                            <button type="submit" class="btn btn-primary" onclick="return confirm('Approve?')">✓ Approve</button>
+                        </form>
+                        <form method="POST" action="{{ url_for('admin.reject_request', req_id=req.id) }}" style="display:inline;">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Reject?')">✗ Reject</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p style="color: #999;">No pending requests.</p>
+    {% endif %}
+
+    <h2>Approved Applications (Digitally Signed)</h2>
+    {% if approved %}
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background: #f0f0f0;">
+                    <th style="border: 1px solid #ddd; padding: 0.5rem;">ID</th>
+                    <th style="border: 1px solid #ddd; padding: 0.5rem;">Application No</th>
+                    <th style="border: 1px solid #ddd; padding: 0.5rem;">Citizen</th>
+                    <th style="border: 1px solid #ddd; padding: 0.5rem;">Type</th>
+                    <th style="border: 1px solid #ddd; padding: 0.5rem;">Signed</th>
+                    <th style="border: 1px solid #ddd; padding: 0.5rem;">Remark</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for req in approved %}
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 0.5rem;">#{{ req.id }}</td>
+                    <td style="border: 1px solid #ddd; padding: 0.5rem;">{{ req.application_number }}</td>
+                    <td style="border: 1px solid #ddd; padding: 0.5rem;">{{ req.requestor.username }}</td>
+                    <td style="border: 1px solid #ddd; padding: 0.5rem;">{{ req.application_type }}</td>
+                    <td style="border: 1px solid #ddd; padding: 0.5rem;">{% if req.digital_signature %}✓ Yes{% else %}✗ No{% endif %}</td>
+                    <td style="border: 1px solid #ddd; padding: 0.5rem;">{{ req.officer_remark or 'N/A' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p style="color: #999;">No approved requests.</p>
+    {% endif %}
+
+    <h2 style="margin-top: 2rem;">Reviewed Applications</h2>
+    <p style="color: #666;">All pending, approved, and rejected applications are visible in the dashboard above.</p>
+</div>
+{% endblock %}

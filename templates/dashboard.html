@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-header">
+        <h1>Welcome, {{ user.full_name or user.username }}! 👋</h1>
+        <p>Role: <span class="role-badge {{ user.role }}">{{ user.role.upper() }}</span></p>
+        <p class="dashboard-meta">Aadhaar ID: {{ user.aadhaar_id or 'N/A' }} | Address: {{ user.address or 'N/A' }}</p>
+    </div>
+
+    <div class="dashboard-content">
+        <div class="main-content">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-title">Total Applications</div>
+                    <div class="stat-value">{{ requests|length }}</div>
+                </div>
+                <div class="stat-card pending">
+                    <div class="stat-title">Pending</div>
+                    <div class="stat-value">{{ requests|selectattr('status', 'equalto', 'pending')|list|length }}</div>
+                </div>
+                <div class="stat-card approved">
+                    <div class="stat-title">Approved</div>
+                    <div class="stat-value">{{ requests|selectattr('status', 'equalto', 'approved')|list|length }}</div>
+                </div>
+            </div>
+
+            {% if user.role == 'citizen' %}
+            <section class="requests-section">
+                <div class="section-header">
+                    <h2>Your Government Applications</h2>
+                    <a href="{{ url_for('dashboard.submit_request') }}" class="btn btn-primary">New Request</a>
+                </div>
+
+                {% if requests %}
+                    <table class="requests-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Application No</th>
+                                <th>Type</th>
+                                <th>Preview</th>
+                                <th>Status</th>
+                                <th>Submitted</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for req in requests %}
+                            <tr>
+                                <td>#{{ req.id }}</td>
+                                <td>{{ req.application_number }}</td>
+                                <td>{{ req.application_type }}</td>
+                                <td>{{ req.purpose[:45] }}{% if req.purpose|length > 45 %}...{% endif %}</td>
+                                <td><span class="status-badge {{ req.status }}">{{ req.status.upper() }}</span></td>
+                                <td>{{ req.created_at.strftime('%Y-%m-%d') }}</td>
+                                <td><a href="{{ url_for('dashboard.view_request', req_id=req.id) }}" class="btn btn-sm">View</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p style="text-align: center; padding: 2rem; color: #999;">No requests yet.</p>
+                {% endif %}
+            </section>
+            {% endif %}
+
+            <section class="info-section">
+                <h2>🔒 Security Implementation</h2>
+                <ul>
+                    <li>✓ AES Encryption for data protection</li>
+                    <li>✓ bcrypt password hashing</li>
+                    <li>✓ Role-Based Access Control</li>
+                    <li>✓ Digital Signatures for approvals</li>
+                    <li>✓ Audit logging enabled</li>
+                </ul>
+            </section>
+
+            <section class="info-section threat-table">
+                <h2>Threat & Solution</h2>
+                <table class="threat-solution-table">
+                    <tr><th>Threat</th><th>Solution</th></tr>
+                    <tr><td>SQL Injection</td><td>Input validation + ORM queries</td></tr>
+                    <tr><td>Data theft</td><td>AES encryption</td></tr>
+                    <tr><td>Unauthorized access</td><td>Session-based authentication</td></tr>
+                </table>
+            </section>
+        </div>
+    </div>
+</div>
+{% endblock %}
