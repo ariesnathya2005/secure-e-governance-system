@@ -55,32 +55,6 @@ body {
     min-height: 80vh;
 }
 
-.auth-box {
-    background: white;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    max-width: 400px;
-    width: 100%;
-}
-
-.auth-box h1 {
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
-    text-align: center;
-    color: #2c3e50;
-}
-
-.subtitle {
-    text-align: center;
-    color: #999;
-    margin-bottom: 1.5rem;
-}
-
-.login-form {
-    margin-bottom: 1.5rem;
-}
-
 .form-group {
     margin-bottom: 1rem;
 }
@@ -436,4 +410,139 @@ body {
         flex-direction: column;
         align-items: flex-start;
     }
+}
+
+/* Modern Login Page Styles */
+.login-card {
+    max-width: 450px;
+    border-top: 5px solid #2980b9;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    background: #ffffff;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.emblem-placeholder {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+.login-header h1 {
+    font-size: 1.6rem;
+    color: #1a252f;
+    margin-bottom: 5px;
+}
+
+.text-muted {
+    color: #7f8c8d;
+}
+
+.separator {
+    height: 1px;
+    background: #ecf0f1;
+    margin: 20px 0;
+}
+
+.custom-input label {
+    color: #2c3e50;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.custom-input input {
+    padding: 12px 15px;
+    border: 1.5px solid #bdc3c7;
+    border-radius: 6px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    background-color: #fcfcfc;
+}
+
+.custom-input input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    outline: none;
+    background-color: #fff;
+}
+
+.btn-lg {
+    padding: 14px 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 6px rgba(52, 152, 219, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-lg:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(52, 152, 219, 0.4);
+}
+
+.modern-info-box {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.modern-info-box h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1rem;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.text-small {
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.table-striped th {
+    background-color: #e8ecf1;
+    color: #2c3e50;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    border: none;
+}
+
+.table-striped td {
+    vertical-align: middle;
+    border-color: #ecf0f1;
+}
+
+.badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: white;
+}
+
+.badge-citizen { background-color: #2ecc71; }
+.badge-officer { background-color: #f39c12; }
+.badge-admin   { background-color: #e74c3c; }
+
+code {
+    background: #eaeded;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+    color: #34495e;
+}
+
+.secure-footer {
+    text-align: center;
+    margin-top: 25px;
+    color: #95a5a6;
+    font-size: 0.85rem;
 }

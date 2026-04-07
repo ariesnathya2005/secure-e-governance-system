@@ -22,6 +22,24 @@ SAMPLE_USERS = [
         'address': '12 Civil Lines, Jaipur'
     },
     {
+        'username': 'citizen2',
+        'password': 'citizen123',
+        'email': 'citizen2@example.com',
+        'role': 'citizen',
+        'full_name': 'Ravi Kumar',
+        'aadhaar_id': '223456789012',
+        'address': '45 MG Road, Mumbai'
+    },
+    {
+        'username': 'citizen3',
+        'password': 'citizen123',
+        'email': 'citizen3@example.com',
+        'role': 'citizen',
+        'full_name': 'Priya Singh',
+        'aadhaar_id': '323456789012',
+        'address': '18 Park Street, Bangalore'
+    },
+    {
         'username': 'officer1',
         'password': 'officer123',
         'email': 'officer@example.com',
@@ -29,6 +47,15 @@ SAMPLE_USERS = [
         'full_name': 'Rahul Mehta',
         'aadhaar_id': '234567890123',
         'address': 'District Office, Jaipur'
+    },
+    {
+        'username': 'officer2',
+        'password': 'officer123',
+        'email': 'officer2@example.com',
+        'role': 'officer',
+        'full_name': 'Vikram Patel',
+        'aadhaar_id': '834567890123',
+        'address': 'Public Grievance Dept, Delhi'
     },
     {
         'username': 'admin1',
@@ -81,7 +108,13 @@ def login():
                 sync_audit_log(log)
                 
                 flash(f'Welcome {username}!', 'success')
-                return redirect(url_for('dashboard.dashboard'))
+                
+                if user.role == 'admin':
+                    return redirect(url_for('admin.admin_dashboard'))
+                elif user.role == 'officer':
+                    return redirect(url_for('admin.admin_panel'))
+                else:
+                    return redirect(url_for('dashboard.dashboard'))
             else:
                 flash('Invalid username or password', 'error')
                 log = AuditLog(action='LOGIN_FAILED', 

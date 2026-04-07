@@ -1,7 +1,11 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
+from dotenv import load_dotenv
 from app.storage import init_mongo
+
+# Load environment variables from .env file
+load_dotenv()
 
 db = SQLAlchemy()
 

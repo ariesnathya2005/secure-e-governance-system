@@ -2,48 +2,70 @@
 
 {% block content %}
 <div class="auth-container">
-    <div class="auth-box">
-        <h1>🔐 Secure Government Portal</h1>
-        <p class="subtitle">Digital Governance System</p>
+    <div class="login-card">
+        <div class="login-header">
+            <div class="emblem-placeholder">🏛️</div>
+            <h1>Secure Government Portal</h1>
+            <p class="subtitle text-muted">Ministry of Digital E-Governance</p>
+        </div>
         
+        <div class="separator"></div>
+
         <form method="POST" action="{{ url_for('auth.login') }}" class="login-form">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="Enter username" required>
+            <div class="form-group custom-input">
+                <label for="username">
+                    <span class="icon">👤</span> Citizen / Officer ID
+                </label>
+                <input type="text" id="username" name="username" placeholder="Enter your registered User ID" required>
             </div>
             
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="Enter password" required>
+            <div class="form-group custom-input">
+                <label for="password">
+                    <span class="icon">🔒</span> Secure Password
+                </label>
+                <input type="password" id="password" name="password" placeholder="Enter your secure password" required>
             </div>
             
-            <button type="submit" class="btn btn-primary btn-block">Login</button>
+            <button type="submit" class="btn btn-primary btn-block btn-lg">
+                Authenticate & Login →
+            </button>
         </form>
         
-        <div class="info-box">
-            <h3>Demo Credentials:</h3>
-            <table class="credentials-table">
-                <tr>
-                    <th>Role</th>
-                    <th>Username</th>
-                    <th>Password</th>
-                </tr>
-                <tr>
-                    <td>Citizen</td>
-                    <td>citizen1</td>
-                    <td>citizen123</td>
-                </tr>
-                <tr>
-                    <td>Officer</td>
-                    <td>officer1</td>
-                    <td>officer123</td>
-                </tr>
-                <tr>
-                    <td>Admin</td>
-                    <td>admin1</td>
-                    <td>admin123</td>
-                </tr>
+        <div class="info-box modern-info-box">
+            <h3><span class="icon">ℹ️</span> Portal Demo Credentials</h3>
+            <p class="text-small text-muted">Use the credentials below to experience the system.</p>
+            <table class="credentials-table table-striped">
+                <thead>
+                    <tr>
+                        <th>Role Access</th>
+                        <th>User ID</th>
+                        <th>PIN / Password</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="badge badge-citizen">Citizen</span></td>
+                        <td><code>citizen1</code> (Anita Sharma)<br>
+                        <code>citizen2</code> (Ravi Kumar)<br>
+                        <code>citizen3</code> (Priya Singh)</td>
+                        <td><code>citizen123</code> (For all)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-officer">Officer</span></td>
+                        <td><code>officer1</code> (Rahul Mehta)<br>
+                        <code>officer2</code> (Vikram Patel)</td>
+                        <td><code>officer123</code> (For all)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge badge-admin">Admin</span></td>
+                        <td><code>admin1</code> (System Admin)</td>
+                        <td><code>admin123</code></td>
+                    </tr>
+                </tbody>
             </table>
+        </div>
+        <div class="secure-footer">
+            <small>🔒 Protected by AES-256 Encryption & SSL/TLS</small>
         </div>
     </div>
 </div>

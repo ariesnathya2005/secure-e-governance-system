@@ -100,13 +100,18 @@ This system is similar to real-world e-Governance portals used by government dep
 
 ## Demo Users
 
-- citizen1 / citizen123
-- officer1 / officer123
-- admin1 / admin123
+**Citizens:**
+- `citizen1`, `citizen2`, `citizen3` (Password: `citizen123`)
+
+**Officers:**
+- `officer1`, `officer2` (Password: `officer123`)
+
+**Admin:**
+- `admin1` (Password: `admin123`)
 
 ## MongoDB Atlas Storage Setup
 
-This project now supports MongoDB Atlas as cloud storage sync for:
+This project supports MongoDB Atlas as cloud storage sync via a `.env` file for:
 - `users`
 - `applications`
 - `audit_logs`
@@ -115,18 +120,31 @@ SQLite remains active for core app compatibility, and writes are mirrored to Atl
 
 1. Create a MongoDB Atlas cluster and database user.
 2. Add your network IP in Atlas Network Access.
-3. Copy your Atlas connection string.
-4. Set environment variables before running the app:
+3. Create a `.env` file in the root directory:
 
-```bash
-export MONGODB_URI="mongodb+srv://<username>:<password>@<cluster-url>/?retryWrites=true&w=majority"
-export MONGODB_DB_NAME="secure_governance"
+```env
+MONGODB_URI="mongodb+srv://<username>:<password>@<cluster-url>/"
+MONGODB_DB_NAME="secure_governance"
 ```
 
-5. Start the app:
+4. Install requirements and start the app:
 
 ```bash
+pip install -r requirements.txt
 python3 app.py
 ```
 
 If `MONGODB_URI` is not set, the app runs normally using SQLite only.
+
+## Complete Working Flow
+
+1. **User Opens Website** -> Receives `login.html`
+2. **Login Process** -> Authentication via bcrypt hashing
+3. **Audit Logging** -> Login success/failures and IP addresses are recorded to track accountability
+4. **Role-Based Routing** -> Redirects to Dashboard (Citizen) or Admin Panel (Officer/Admin) depending on Access Control
+5. **Data Submission & Validation** -> Filters malicious XSS & SQLi payloads
+6. **Encryption (AES)** -> Application purpose is encrypted before storage
+7. **Database Storage** -> Encrypted data is synchronized to SQLite and MongoDB Atlas
+8. **Admin/Officer Review** -> Admin accesses panel, views decrypted payload, and approves/rejects
+9. **Digital Signature** -> Approved applications receive a SHA-256 digital signature mathematically proving authenticity
+10. **Response to User** -> Citizen views the mathematically signed certificate in their dashboard
